@@ -16,7 +16,7 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 //roles is an array-> ["admin","subadmin"]
-export const authorisedRoles = (...roles) => {
+export const authorisedRoles = (roles) => {
   return (req, res, next) => {
     //now our user is in req.user from above authentication
     if (!roles.includes(req.user.role)) {

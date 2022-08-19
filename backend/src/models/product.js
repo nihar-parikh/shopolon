@@ -17,7 +17,7 @@ const productSchema = new Schema(
       required: [true, "Please enter product price"],
       maxlength: [8, "Price cannot exceed 8 figures"],
     },
-    ratings: {
+    totalAverageRatings: {
       type: Number,
       default: 0,
     },
@@ -33,13 +33,11 @@ const productSchema = new Schema(
         },
       },
     ],
+    category: {
+      type: String,
+      required: [true, "Please enter product category"],
+    },
 
-    category: [
-      {
-        type: String,
-        required: [true, "Please enter product category"],
-      },
-    ],
     stock: {
       type: Number,
       required: [true, "Please enter product stock"],
@@ -52,7 +50,12 @@ const productSchema = new Schema(
     },
     reviews: [
       {
-        name: {
+        userId: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        userName: {
           type: String,
           required: true,
         },
@@ -68,10 +71,20 @@ const productSchema = new Schema(
     ],
     //for checking who is creating products...
     //if there are multiple admin then by passing user's id here others can be able to know.
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-      required: true,
+    createdBy: {
+      userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      userName: {
+        type: String,
+        required: true,
+      },
+      role: {
+        type: String,
+        required: true,
+      },
     },
   },
   { timestamps: true }
